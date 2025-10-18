@@ -1,32 +1,35 @@
-## Assignment 1: Emergency Dispatcher Triage
+## Assignment 1: Emergency Call Triage Assistant
 
-Concept focus: ChatOpenAI basics, ChatPromptTemplate, StrOutputParser
+Engage with a realistic dispatch scenario. You will design a tiny LLM-powered assistant that reads a caller transcript and produces:
 
-Scenario
-- You volunteer at a community emergency hotline. Calls come in with mixed clarity.
-- Your job is to build a tiny triage helper that classifies a caller message as one of:
-  - LIFE_THREATENING
-  - URGENT
-  - NON_URGENT
-  - UNKNOWN
-- The assistant must also extract a one‑line rationale.
+- an urgency label (EMERGENCY, NON_EMERGENCY, UNKNOWN)
+- a one-sentence summary
+- a recommended next action
 
-Your tasks (in `emergency_dispatcher.py`)
-- Implement a `ChatPromptTemplate` with a clear system role and a templated user message.
-- Compose a simple LCEL pipeline: `prompt | llm | StrOutputParser()`.
-- Return a compact JSON string like: `{ "priority": "URGENT", "reason": "..." }`.
+### Concepts practiced
+- Chat model basics with `ChatOpenAI`
+- `ChatPromptTemplate.from_messages`
+- LCEL chaining with `prompt | llm | StrOutputParser()`
 
-Guardrails
-- Be concise. No extra prose around JSON.
-- Avoid overconfident claims; if uncertain, return `UNKNOWN`.
+### Your task
+Fill in the TODOs inside `emergency_dispatcher.py` to:
+- Build a role-aware prompt (system + user) that instructs the assistant to be concise and safe
+- Create a small chain that returns a compact, single-line, pipe-delimited string: `URGENCY | SUMMARY | ACTION`
+- Parse and map that string into a `DispatchResult` dataclass
 
-Stretch ideas
-- Add `temperature` controls and compare outputs.
-- Add a simple function that maps caller-provided location cues ("near the old bridge") to a rough area tag used in logging.
+### Acceptance criteria
+- The script prints a structured triage result for each example transcript
+- Urgency is one of: `EMERGENCY`, `NON_EMERGENCY`, `UNKNOWN`
+- Summary is ≤ 20 words
+- Action begins with a verb (e.g., "Dispatch ambulance", "Provide reassurance")
 
-How to run
-```bash
-python -m assignments.assignment_01_emergency_dispatcher.emergency_dispatcher
+### Run
 ```
+python emergency_dispatcher.py
+```
+
+Set your API key first: `export OPENAI_API_KEY=...`
+
+Tip: Start with low temperature for consistent outputs.
 
 

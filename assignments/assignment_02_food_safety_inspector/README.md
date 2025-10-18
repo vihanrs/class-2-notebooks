@@ -1,23 +1,28 @@
 ## Assignment 2: AI Food Safety Inspector
 
-Concept focus: Zero-shot prompting, PromptTemplate, JSON outputs, multi-step chains
+Scenario: Reviews and social posts often hint at health code issues. Your AI assistant
+should detect likely violations and recommend inspection priority — purely from
+clear instructions (zero-shot), producing structured JSON that you map to Python types.
 
-Scenario
-- City health dept triages public reviews to spot possible violations quickly.
-- Build an analyzer that finds violations, extracts evidence snippets, and scores risk.
+### Concepts practiced
+- Zero-shot prompting for structured outputs
+- `PromptTemplate.from_template`
+- Chaining with `prompt | llm` and parsing JSON to dataclasses
 
-Your tasks (in `food_inspector.py`)
-- Create two prompts: analysis (detect violations) and risk (score + priority).
-- Compose chains and parse JSON into structured Python objects.
-- Provide `analyze_review`, `batch_analyze`, and a simple CLI tester.
+### Your task
+Complete the TODOs in `food_inspector.py` to:
+- Craft a precise analysis prompt that extracts violations with evidence quotes
+- Produce JSON and map it into `Violation` objects
+- Compute an overall risk score and priority
+- Aggregate across multiple reviews
 
-Hints
-- Keep responses machine-parseable JSON. Avoid prose.
-- Include confidence scores and handle ambiguity.
-
-Run
-```bash
-python -m assignments.assignment_02_food_safety_inspector.food_inspector
+### Run
 ```
+python food_inspector.py
+```
+
+Set your API key first: `export OPENAI_API_KEY=...`
+
+Keep temperature low for consistent schema adherence.
 
 
